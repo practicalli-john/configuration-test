@@ -1,6 +1,8 @@
 (ns practicalli.config-testing-test
-  (:require [clojure.test :refer :all]
-            [practicalli.config-testing :refer :all]))
+  (:require
+    [clojure.test :refer :all]
+    [practicalli.config-testing :refer :all]))
+
 
 (deftest a-test
   (testing "FIXME, I fail."
