@@ -1,0 +1,48 @@
+name: 'Fraud API service tests'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: 'Test Clojure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3.0.2
+
+      - name: Prepare java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 'Install clojure tools'
+        uses: DeLaGuardo/setup-clojure@7.0
+        with:
+          cli: 1.11.1.1149      # Clojure CLI
+          cljstyle: 0.15.0      # cljstyle
+          clj-kondo: 2022.05.31 # Clj-kondo
+          # bb: 0.7.8           # Babashka
+
+      - name: 'Lint with clj-kondo'
+        run: clj-kondo --lint src --config .clj-kondo/ci-config.edn
+
+      - name: "Check Clojure Style"
+        run: cljstyle check --report
+
+      # - name: Get zprint version
+      #   run: zprint --version
+
+      - name: "Cache"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+
+      - name: 'Kaocha test runner'
+        run: clojure -X:test/run
