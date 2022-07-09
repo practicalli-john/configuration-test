@@ -89,6 +89,5 @@
            :deps.edn                  {:level :warning}}
 
  ;; Format the output of clj-kondo for GitHub actions
- :output {:pattern "::{{level}} file={{filename}},line={{row}},col={{col}}::{{message}}"}
-
- }
+ ;; :output {:pattern "::{{level}} file={{filename}},line={{row}},col={{col}}::{{message}}"}
+ :output {:format :json}}

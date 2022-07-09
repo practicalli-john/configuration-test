@@ -35,15 +35,17 @@ jobs:
           clj-kondo: 2022.05.31 # Clj-kondo
           # bb: 0.7.8           # Babashka
 
-      - name: "Cache"
-        uses: actions/cache@v2
+      - name: 'Prepare reviewdog'
+        uses: reviewdog/action-setup@v1
         with:
-          path: |
-            ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+          reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
+
 
       - name: 'Lint with clj-kondo'
         run: clj-kondo --lint src --config .clj-kondo/ci-config.edn
+        with:
+          check-name: 'liniting report'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Check Clojure Style"
         run: cljstyle check --report
