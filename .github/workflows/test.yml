@@ -20,6 +20,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: "Cache"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+
       - name: 'Install clojure tools'
         uses: DeLaGuardo/setup-clojure@7.0
         with:
