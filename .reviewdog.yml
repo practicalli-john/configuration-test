@@ -1,9 +1,9 @@
 runner:
   cljstyle:
     cmd: cljstyle check --report
-    format: diff
+    format: errorformat
     name: cljstyle
   clj-kondo:
     cmd: clj-kondo --lint src --config .clj-kondo/ci-config.edn
-    format: rdjson
+    format: errorformat
     name: clj-kondo
