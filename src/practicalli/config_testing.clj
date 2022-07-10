@@ -11,8 +11,6 @@
 
 
 (defn something
-  [one two]
-  one)
-
-
-(something "")
+  [one]
+  (let [shy (+ 1 2 3)]
+    one))
