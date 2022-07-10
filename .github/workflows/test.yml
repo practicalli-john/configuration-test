@@ -14,24 +14,24 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v3.0.2
 
-      - name: Prepare java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      # - name: Prepare java
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '17'
 
-      - name: "Cache"
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+      # - name: "Cache"
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ~/.m2/repository
+      #     key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
 
       - name: 'Install clojure tools'
         uses: DeLaGuardo/setup-clojure@7.0
         with:
-          cli: 1.11.1.1149      # Clojure CLI
-          cljstyle: 0.15.0      # cljstyle
+          # cli: 1.11.1.1149      # Clojure CLI
+          # cljstyle: 0.15.0      # cljstyle
           clj-kondo: 2022.05.31 # Clj-kondo
           # bb: 0.7.8           # Babashka
 
@@ -39,12 +39,17 @@ jobs:
         uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: info
+          runnters: clj-kondo
 
-      - name: Run reviewdog
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: reviewdog -efm="%f:%l:%c: %m" -diff="git diff FETCH_HEAD" -runners=clj-kondo
-          # reviewdog -f=diff -f.diff.strip=1 -reporter=github-pr-review -runners=cljstyle,clj-kondo  -reporter=github-pr-review
+      # - name: Run reviewdog
+        # env:
+          # REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # run: reviewdog -f=diff -f.diff.strip=1 -reporter=github-pr-review -runners=cljstyle,clj-kondo  -reporter=github-pr-review
+          # reviewdog -efm="%f:%l:%c: %m" -diff="git diff FETCH_HEAD" -runners=clj-kondo
+          #
 
 
       # - name: 'Lint with clj-kondo'
