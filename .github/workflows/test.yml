@@ -1,4 +1,4 @@
-name: 'Fraud API service tests'
+name: 'Service tests'
 
 on:
   pull_request:
