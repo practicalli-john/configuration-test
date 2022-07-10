@@ -8,3 +8,9 @@
   (testing "FIXME, I fail."
     (is (not= 0 1))
     (is (= 1 1))))
+
+
+(deftest another-test
+  (testing "FIXME, I fail."
+    (is (not= 0 1))
+    (is (= 1 1))))
