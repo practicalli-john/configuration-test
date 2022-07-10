@@ -2,11 +2,11 @@ name: Style Clojure
 on: [pull_request]
 jobs:
   cljstyle:
-    name:  Workflow
+    name:  Check Style
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.0.2
-      - name: cljstyle
+      - name: Run cljstyle
         uses: practicalli/clojure-style-action@main
         with:
           github_token: ${{ secrets.github_token }}
