@@ -44,7 +44,8 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            clj-kondo --lint src --config .clj-kondo/ci-config.edn | reviewdog -reporter=github-pr-check
+            # clj-kondo --lint src --config .clj-kondo/ci-config.edn | reviewdog -f=diff -reporter=github-pr-check
+            cljstyle check --report | reviewdog -f=diff -reporter=github-pr-review
 
       # - name: 'Lint with clj-kondo'
       #   run: clj-kondo --lint src --config .clj-kondo/ci-config.edn | reviewdog -reporter=github-pr-review
