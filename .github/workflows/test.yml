@@ -14,24 +14,23 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v3.0.2
 
-      # - name: Prepare java
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     distribution: 'temurin'
-      #     java-version: '17'
+      - name: Prepare java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-      # - name: "Cache"
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.m2/repository
-      #     key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+      - name: "Cache Dependencies"
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
 
       - name: 'Install clojure tools'
         uses: DeLaGuardo/setup-clojure@7.0
         with:
-          # cli: 1.11.1.1149      # Clojure CLI
-          # cljstyle: 0.15.0      # cljstyle
+          cli: 1.11.1.1149      # Clojure CLI
+          cljstyle: 0.15.0      # cljstyle
           clj-kondo: 2022.05.31 # Clj-kondo
           # bb: 0.7.8           # Babashka
 
@@ -42,7 +41,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
           level: info
-          runnters: clj-kondo
+          runners: clj-kondo
 
       # - name: Run reviewdog
         # env:
@@ -61,5 +60,5 @@ jobs:
       # - name: Get zprint version
       #   run: zprint --version
 
-      # - name: 'Kaocha test runner'
-      #   run: clojure -X:test/run
+      - name: 'Kaocha test runner'
+        run: clojure -X:test/run
