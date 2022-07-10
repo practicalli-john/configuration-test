@@ -1,6 +1,6 @@
 runner:
   cljstyle:
-    cmd: cljstyle check --report
+    cmd: cljstyle check
     format: diff
     name: cljstyle
   clj-kondo:
