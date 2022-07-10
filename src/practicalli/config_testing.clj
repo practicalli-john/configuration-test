@@ -9,7 +9,10 @@
   [& args]
   (greet {:name (first args)}))
 
-(defn nothing
-  [])
 
-(nothing "")
+(defn something
+  [one two]
+  one)
+
+
+(something "")
