@@ -1,5 +1,9 @@
 runner:
+  cljstyle:
+    cmd: cljstyle fix
+    format: diff
+    name: cljstyle
   clj-kondo:
     cmd: clj-kondo --lint src --config .clj-kondo/ci-config.edn
-    format: rdjson
-    name: ClojureLinter
+    format: errorformat
+    name: clj-kondo

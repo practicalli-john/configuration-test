@@ -1,4 +1,4 @@
-name: 'Fraud API service tests'
+name: 'Service tests'
 
 on:
   pull_request:
@@ -20,11 +20,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: "Cache"
-        uses: actions/cache@v2
+      - name: "Cache Dependencies"
+        uses: actions/cache@v3
         with:
-          path: |
-            ~/.m2/repository
+          path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
 
       - name: 'Install clojure tools'
@@ -39,12 +38,19 @@ jobs:
         uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: info
+          runners: clj-kondo
 
       - name: Run reviewdog
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            clj-kondo | reviewdog -reporter=github-pr-check
+        # env:
+          # REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: reviewdog -f=diff -f.diff.strip=1 -runners=clj-kondo
+        # run: reviewdog -f=diff -f.diff.strip=1 -reporter=github-pr-review -runners=cljstyle,clj-kondo  -reporter=github-pr-review
+          # reviewdog -efm="%f:%l:%c: %m" -diff="git diff FETCH_HEAD" -runners=clj-kondo
+          #
+
 
       # - name: 'Lint with clj-kondo'
       #   run: clj-kondo --lint src --config .clj-kondo/ci-config.edn | reviewdog -reporter=github-pr-review

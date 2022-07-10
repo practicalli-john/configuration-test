@@ -25,7 +25,7 @@
            :unused-binding                {:level :warning
                                            ;;:exclude-destructured-keys-in-fn-args false
                                            ;;:exclude-destructured-as false
-                                           ,}
+                                           }
            :unsorted-required-namespaces  {:level :off}
            :unused-namespace              {:level :warning
                                            ;; don't warn about these namespaces:
@@ -90,4 +90,6 @@
 
  ;; Format the output of clj-kondo for GitHub actions
  ;; :output {:pattern "::{{level}} file={{filename}},line={{row}},col={{col}}::{{message}}"}
- :output {:format :json}}
+ :output {:pattern "{{filename}}:{{row}}:{{col}}: {{message}}"}
+ ;; :output {:format :json}
+ }

@@ -1,3 +1,4 @@
 ;; cljstyle configuration
 {:files {:ignore #{"checkouts" "target"}}
- :rules {:blank-lines {:max-consecutive 7}}}
+ :rules {:blank-lines {:max-consecutive 3}}
+ :indentation {:indent-lists 1}}
