@@ -9,4 +9,7 @@
   [& args]
   (greet {:name (first args)}))
 
-(defn i-am-broken)
+(defn nothing
+  [])
+
+(nothing "")
